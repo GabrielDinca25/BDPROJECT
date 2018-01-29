@@ -10,12 +10,21 @@ PlayerManager::PlayerManager()
 void PlayerManager::CreateTable(QSqlDatabase db)
 {
     QSqlQuery query(db);
-    query.prepare("CREATE TABLE Players ( Id int PRIMARY KEY, Age int, Weight int, Team text, Points int);");
+    bool tableCreated = query.exec("CREATE TABLE IF NOT EXISTS Players ( Id int PRIMARY KEY, Age int, Weight int, Team text, Points int);");
+    if(tableCreated)
+    {
+        qDebug() << "Table created";
+    }
+    else
+    {
+        qDebug() << "Table already exists";
+    }
 }
 
 void PlayerManager::InsertPlayer(QSqlDatabase db, Player* player)
 {
-     ranking->UpdateTable(player);// trebuie sa intoarca o buleana ceva ca sa nu poata sa fie inscris dupa in baza
+
+     //ranking->UpdateTable(player);// trebuie sa intoarca o buleana ceva ca sa nu poata sa fie inscris dupa in baza
      QSqlQuery query(db);
      query.prepare("INSERT INTO"
                    "     Players(id, age, weight, team, points)"
@@ -33,22 +42,47 @@ void PlayerManager::InsertPlayer(QSqlDatabase db, Player* player)
 
 }
 
-void PlayerManager::ShowPlayers(QSqlDatabase db)
+Player PlayerManager::ShowPlayers(QSqlDatabase db)
 {
-//    QSqlQuery query(db);
-//    query.prepare("SELECT * FROM Players");
-//    query.exec();
+    QSqlQuery query(db);
+    query.prepare("SELECT * FROM Players");
+    query.exec();
 
 
-//    int id = query.value("id").toInt();
-//    int age = query.value("age").toInt();
-//    int weight = query.value("weight").toInt();
-//    QString team = query.value("team").toString();
-//    int points = query.value("points").toInt();
+    int id = query.value("id").toInt();
+    int age = query.value("age").toInt();
+    int weight = query.value("weight").toInt();
+    QString team = query.value("team").toString();
+    int points = query.value("points").toInt();
 
+    Player player(id, age, weight, team, points);
 
-//    Player player(id, age, weight, team, points);
-\
-//    return player;
+    return player;
 
 }
+
+std::vector<Player> GetPlayers(QSqlDatabase db)
+{
+    QSqlQuery query(db);
+    query.prepare("SELECT * FROM Players");
+    query.exec();
+
+    std::vector<Player> players;
+    while(query.next()) {
+
+        int id = query.value("Id").toInt();
+        int age = query.value("Age").toInt();
+        int weight = query.value("Weight").toInt();
+        QString team = query.value("Team").toString();
+        int points = query.value("Points").toInt();
+
+        Player player(id, age, weight, team, points);
+
+
+        players.push_back(player);
+    }
+
+    return players;
+
+}
+

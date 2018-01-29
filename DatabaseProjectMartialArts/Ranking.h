@@ -2,6 +2,11 @@
 #define RANKING_H
 
 #include <QDialog>
+#include <QSqlDatabase>
+#include <QVariant>
+#include <QSqlQuery>
+
+#include <algorithm>
 #include "Player.h"
 namespace Ui {
 class Ranking;
@@ -15,10 +20,10 @@ public:
     explicit Ranking(QWidget *parent = 0);
     ~Ranking();
     Ui::Ranking *ui;
-    void on_buttonBox_accepted();
-    void UpdateTable(Player* player);
-
-
+    void UpdateTable(QSqlDatabase db);
+    std::vector<Player> players;
+private slots:
+    void on_Cancel_clicked();
 };
 
 #endif // RANKING_H
