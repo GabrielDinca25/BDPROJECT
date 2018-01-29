@@ -5,6 +5,7 @@
 #include "additemdialog.h"
 #include "Database.h"
 #include<QSqlError>
+#include "Ranking.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -16,13 +17,11 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_db = QSqlDatabase::addDatabase("QPSQL");
     m_db.setHostName("horton.elephantsql.com");
-    qDebug() << "sethost";
     m_db.setDatabaseName("jnzdnjdu");
-    qDebug() << "setname";
     m_db.setUserName("jnzdnjdu");
-    qDebug() << "setUser";
     m_db.setPassword("e3aDPhYnK4OQLGM4Bgh4h4zzeY0DdGm_");
-    qDebug() << "password";
+
+    m_db.open();
 
     qDebug() << "status" << m_db.isOpen();
     if(isConnected == m_db.open())
@@ -66,3 +65,27 @@ void MainWindow::onAddItem()
         ui->tableWidget->setItem(rowCount, 4, new QTableWidgetItem(points));
     }*/
 }
+
+void MainWindow::on_AddPlayer_clicked()
+{
+    int res = m_addItem->exec();
+
+    if(res == QDialog::Accepted)
+    {
+        m_playerManager->InsertPlayer(m_db, m_addItem->CreatePlayer());
+        qDebug() << "Player Inserted";
+
+    }
+    else
+    {
+        qDebug() << "Insert canceled";
+    }
+
+}
+
+void MainWindow::on_ShowRanks_clicked()
+{
+    m_playerManager->ranking->exec();
+
+}
+

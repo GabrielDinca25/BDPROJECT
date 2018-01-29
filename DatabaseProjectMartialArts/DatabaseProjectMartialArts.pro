@@ -29,16 +29,19 @@ SOURCES += \
     additemdialog.cpp \
     Player.cpp \
     PlayerManager.cpp \
-    Database.cpp
+    Database.cpp \
+    Ranking.cpp
 
 HEADERS += \
         mainwindow.h \
     additemdialog.h \
     Player.h \
     PlayerManager.h \
-    Database.h
+    Database.h \
+    Ranking.h
 
 FORMS += \
         mainwindow.ui \
     additemdialog.ui \
-    mainwindow.ui
+    mainwindow.ui \
+    ranking.ui

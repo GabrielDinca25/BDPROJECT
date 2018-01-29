@@ -1,7 +1,6 @@
 #ifndef ADDITEMDIALOG_H
 #define ADDITEMDIALOG_H
 
-
 #include <QDialog>
 #include "Player.h"
 #include "PlayerManager.h"
