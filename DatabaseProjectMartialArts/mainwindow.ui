@@ -30,6 +30,20 @@
      </widget>
     </item>
     <item>
+     <widget class="QPushButton" name="Simulate">
+      <property name="text">
+       <string>Simulate</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="simulareLupta">
+      <property name="text">
+       <string>Show round results</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QLabel" name="connectionStatus">
       <property name="text">
        <string>Status: Not connected</string>

@@ -5,6 +5,7 @@
 PlayerManager::PlayerManager()
 {
        ranking  = new Ranking();
+       _fights = new fights();
 }
 
 void PlayerManager::CreateTable(QSqlDatabase db)
@@ -61,7 +62,7 @@ Player PlayerManager::ShowPlayers(QSqlDatabase db)
 
 }
 
-std::vector<Player> GetPlayers(QSqlDatabase db)
+std::vector<Player> PlayerManager::GetPlayers(QSqlDatabase db)
 {
     QSqlQuery query(db);
     query.prepare("SELECT * FROM Players");
@@ -83,6 +84,28 @@ std::vector<Player> GetPlayers(QSqlDatabase db)
     }
 
     return players;
+}
 
+void PlayerManager::UpdatePoints(QSqlDatabase db, int id, int points)
+{
+    QSqlQuery query(db);
+        query.prepare("UPDATE "
+                      "     Players"
+                      " SET"
+                      "      points = (:points)"
+                      " WHERE"
+                      "      id = (:id)");
+        query.bindValue(":points", points);
+        query.bindValue(":id", id);
+        query.exec();
+
+}
+
+void PlayerManager::RemovePlayer(QSqlDatabase db, int id)
+{
+    QSqlQuery query(db);
+    query.prepare("DELETE FROM Players WHERE Id = (:id)");
+    query.bindValue(":id", id);
+    qDebug() << query.exec();
 }
 

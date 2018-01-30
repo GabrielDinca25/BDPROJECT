@@ -5,9 +5,10 @@
 #include <QSqlDatabase>
 #include <QVariant>
 #include <QSqlQuery>
-
 #include <algorithm>
 #include "Player.h"
+
+
 namespace Ui {
 class Ranking;
 }

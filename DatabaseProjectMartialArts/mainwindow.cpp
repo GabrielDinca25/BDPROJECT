@@ -15,11 +15,11 @@ MainWindow::MainWindow(QWidget *parent) :
     m_addItem = new AddItemDialog(this);
     connect(ui->actionAddItems, &QAction::triggered, this, &MainWindow::onAddItem);
 
-    m_db = QSqlDatabase::addDatabase("QSQLITE");
-    m_db.setHostName("localhost");
-    m_db.setDatabaseName("database.db");
-    m_db.setUserName("jnzdnjdu");
-    m_db.setPassword("e3aDPhYnK4OQLGM4Bgh4h4zzeY0DdGm_");
+    m_db = QSqlDatabase::addDatabase("QPSQL");
+    m_db.setHostName("horton.elephantsql.com");
+    m_db.setDatabaseName("qghjbscd");
+    m_db.setUserName("qghjbscd");
+    m_db.setPassword("5N0ywo2VDwjo6zcoKhd4PuUen0QEzLV0");
 
     m_db.open();
 
@@ -28,9 +28,10 @@ MainWindow::MainWindow(QWidget *parent) :
     {
         ui->connectionStatus->setText("Status: Connected");
     }
-    qDebug()<< "last error" << m_db.lastError();
+ //   qDebug()<< "last error" << m_db.lastError();
     m_playerManager = new PlayerManager();
     m_playerManager->CreateTable(m_db);
+
 }
 
 MainWindow::~MainWindow()
@@ -45,25 +46,7 @@ void MainWindow::onAddItem()
     if(res == QDialog::Accepted)
     {
         m_playerManager->InsertPlayer(m_db, m_addItem->CreatePlayer());
-        qDebug() << "Player Inserted";
     }
-    else
-    {
-        qDebug() << "Dialog Not Accepted";
-    }
-
-    /*if(res == QDialog::Accepted)
-    {
-        QString id, age, weight, team, points;
-        m_addItem->PlayerData(id, age, weight, team, points);
-        int rowCount = ui->tableWidget->rowCount();
-        ui->tableWidget->insertRow(rowCount);
-        ui->tableWidget->setItem(rowCount, 0, new QTableWidgetItem(id));
-        ui->tableWidget->setItem(rowCount, 1, new QTableWidgetItem(age));
-        ui->tableWidget->setItem(rowCount, 2, new QTableWidgetItem(weight));
-        ui->tableWidget->setItem(rowCount, 3, new QTableWidgetItem(team));
-        ui->tableWidget->setItem(rowCount, 4, new QTableWidgetItem(points));
-    }*/
 }
 
 void MainWindow::on_AddPlayer_clicked()
@@ -74,7 +57,6 @@ void MainWindow::on_AddPlayer_clicked()
     {
         m_playerManager->InsertPlayer(m_db, m_addItem->CreatePlayer());
         qDebug() << "Player Inserted";
-
     }
     else
     {
@@ -85,8 +67,22 @@ void MainWindow::on_AddPlayer_clicked()
 
 void MainWindow::on_ShowRanks_clicked()
 {
+
+    //int a = 14;
+    //m_playerManager->RemovePlayer(m_db, a);
     m_playerManager->ranking->UpdateTable(m_db);
     m_playerManager->ranking->exec();
 
 }
 
+
+void MainWindow::on_Simulate_clicked()
+{
+    m_playerManager->_fights->ShowTable(m_db);
+    m_playerManager->_fights->on_playRoundButton_clicked(m_db);
+}
+
+void MainWindow::on_simulareLupta_clicked()
+{
+    m_playerManager->_fights->exec();
+}

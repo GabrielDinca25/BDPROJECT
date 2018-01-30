@@ -30,7 +30,8 @@ SOURCES += \
     Player.cpp \
     PlayerManager.cpp \
     Database.cpp \
-    Ranking.cpp
+    Ranking.cpp \
+    Fights.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -38,10 +39,12 @@ HEADERS += \
     Player.h \
     PlayerManager.h \
     Database.h \
-    Ranking.h
+    Ranking.h \
+    Fights.h
 
 FORMS += \
         mainwindow.ui \
     additemdialog.ui \
     mainwindow.ui \
-    ranking.ui
+    ranking.ui \
+    fights.ui

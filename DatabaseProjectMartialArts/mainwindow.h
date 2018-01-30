@@ -19,6 +19,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    PlayerManager *m_playerManager;
 
 private slots:
     void onAddItem();
@@ -27,12 +28,17 @@ private slots:
 
     void on_ShowRanks_clicked();
 
+    void on_Simulate_clicked();
+
+
+    void on_simulareLupta_clicked();
+
 private:
     Ui::MainWindow *ui;
     AddItemDialog *m_addItem;
     QSqlDatabase m_db;
     bool isConnected;
-    PlayerManager *m_playerManager;
+    bool tableShowed = false;
     Ranking *m_ranking;
 };
 
